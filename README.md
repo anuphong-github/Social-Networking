@@ -2,7 +2,6 @@
 
 ### To do list :
 [x] users app <br>
-[x] blog <br>
 
 ### Bug fix:
 [x] <br>
@@ -19,3 +18,6 @@
 ### Crazy Idea:
 [x] <br>
 [x] <br>
+
+### Functions :
+[x] register <br>

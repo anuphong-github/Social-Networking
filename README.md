@@ -1,15 +1,16 @@
 # Social-Networking
 
 ### To do list :
-[x] users app <br>
-
+[x] <br>
+### Doing :
+[+] <br>
+[+] <br>
 ### Bug fix:
 
 ### Bug created :
-
+[+]
 ### Problem :
 
 ### Crazy Idea:
 
 ### Functions :
-[x] register <br>

@@ -1,7 +1,7 @@
 # Social-Networking
 
 ### To do list :
-[x] app users /def profile<br>
+[x]  <br>
 ### Doing :
 [+] <br>
 [+] <br>

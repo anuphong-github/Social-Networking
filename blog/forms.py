@@ -3,5 +3,5 @@ from .models import Comment
 
 class UserCommentForm(forms.ModelForm):
     class Meta:
-        models = Comment
+        model = Comment
         fields = ['content']

@@ -15,7 +15,7 @@
 {% for post in posts %}
 <table border="1" cellpadding="10">
     <tr>
-      <td>{{ post.content }}</td>
+      <td><a href="{% url 'post-detail' post.id %}">{{ post.content }}</a></td>
       <td>{{ post.date_posted | date:"H:i l, d.m.y" }}</td>
       <td>
         {% if post.author == user %}

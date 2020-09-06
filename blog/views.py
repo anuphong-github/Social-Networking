@@ -126,3 +126,23 @@ class PostUpdate(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
         data = super().get_context_data(**kwargs)
         data['tag'] = 'Edit'
         return data
+
+class PostDetail(DetailView):
+    model = Post
+    template_name = 'blog/post-detail.html'
+    context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        comments_connected = Comment.objects.filter(post_connected=self.get_object()).order_by('-date_posted')
+        data['comments'] = comments_connected
+        data['form'] = UserCommentForm(instance=self.request.user)
+        return data
+
+    def post(self, request, *args, **kwargs):
+        new_comment = Comment(content=request.POST.get('content'),
+                              author=self.request.user,
+                              post_connected=self.get_object())
+        new_comment.save()
+
+        return self.get(self, request, *args, **kwargs)

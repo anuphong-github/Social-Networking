@@ -1,21 +1,19 @@
 # Social-Networking
 
 ### To do list :
-[x] ทำหน้า Logout
-[x] ทำหน้า home.html ก่อน
-[x] ลุยเขียนฟังก์ชั่นต่อ ของ Blog app  <br>
+[x] ทำรายละเอียดของโพส และ ให้เอาการแสดงความคิดเห็นขึ้นมาด้วย
 
 ### Doing :
-[+] <br>
-[+] <br>
+
 
 ### Bug fix:
 
 ### Bug created :
-[+]
+[x]class PostDetail ส่งค่าไปและเกิด error 
 ### Problem :
 
 ### Crazy Idea:
+
 ### Success :
-[x] class PostCreate()
+
 ### Functions :

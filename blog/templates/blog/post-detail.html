@@ -1,0 +1,62 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <h3 class="">
+        Post
+    </h3>
+  <img style="width: 30px; height: 30px;"
+       src="{{ post.author.profile.image.url }}">
+  <a href="{% url 'user-posts' post.author %}">{{ post.author }} </a>
+
+  <div>
+    {% if post.author == user %}
+    <a  href="{% url 'post-delete' post.id %}">Delete</a>
+    <a  href="{% url 'post-update' post.id %}">Update</a>
+    {%  endif %}
+ </div>
+
+  <a>
+    <p>{{ post.content }}</p>
+    <p> {{ post.date_posted | date:"H:i l, d.m.y" }}</p>
+  </a>
+
+  <h3>
+      Comments
+  </h3>
+
+{% for comment in comments %}
+  <div>
+    <div>
+      <div>
+    <img style="width: 20px; height: 20px;"
+         src="{{ comment.author.profile.image.url }}">
+    <a  href="{% url 'user-posts' comment.author.username %}">
+        {{ comment.author }}
+    </a>
+  </div>
+</div>
+  <p>
+      {{ comment.content }}
+  </p>
+
+  <p>{{ comment.date_posted | date:"H:i l, d.m.y" }}</p>
+</div>
+
+{% endfor %}
+
+        {% if user is not None %}
+                <h3>Add your comment</h3>
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <fieldset>
+                        {{ form | crispy }}
+                    </fieldset>
+                    <div>
+                        <button  type="submit">Submit</button>
+                    </div>
+                </form>
+
+        {% endif %}
+
+{% endblock content %}

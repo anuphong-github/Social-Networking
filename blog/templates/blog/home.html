@@ -16,10 +16,17 @@
 <table border="1" cellpadding="10">
     <tr>
       <td>{{ post.content }}</td>
-    </tr>
-    <tr>
       <td>{{ post.date_posted | date:"H:i l, d.m.y" }}</td>
+      <td>
+        {% if post.author == user %}
+             <a class="material-icons ml-2"
+                style="font-size: 14px"
+                     href="{% url 'post-delete' post.id %}">Delete</a>
+
+         {%  endif %}
+      </td>
     </tr>
+
 </table>
 {% endfor %}
 {% endblock content%}

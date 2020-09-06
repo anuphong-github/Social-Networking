@@ -6,11 +6,14 @@
     <title>Social Networking</title>
   </head>
   <body>
+
     <nav>
       <ul>
-        <li><a href="{% url 'profile'%}">My profile</a></li>
+        <li>  <a href="/login">login</a></li>
+        <li>  <a href="/logout">logout</a></li>
       </ul>
     </nav>
+
     {% block content %}
 
     {% endblock content %}

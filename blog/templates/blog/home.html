@@ -19,10 +19,8 @@
       <td>{{ post.date_posted | date:"H:i l, d.m.y" }}</td>
       <td>
         {% if post.author == user %}
-             <a class="material-icons ml-2"
-                style="font-size: 14px"
-                     href="{% url 'post-delete' post.id %}">Delete</a>
-
+             <a href="{% url 'post-delete' post.id %}">Delete</a>
+             <a href="{% url 'post-update' post.id %}">Update</a>
          {%  endif %}
       </td>
     </tr>

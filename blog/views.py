@@ -107,3 +107,21 @@ class PostDelete(LoginRequiredMixin, UserPassesTestMixin,DeleteView):
 
     def test_func(self):
         return is_users(self.get_object().author,self.request.user)
+
+class PostUpdate(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
+    model = Post
+    fields = ['content']
+    template_name = 'blog/post-create.html'
+    success_url = '/'
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        return is_users(self.get_object().author,self.request.user)
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['tag'] = 'Edit'
+        return data

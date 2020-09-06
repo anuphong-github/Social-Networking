@@ -1,7 +1,7 @@
 # Social-Networking
 
 ### To do list :
-[x] ทำหน้า Logout 
+[x] ทำหน้า Logout
 [x] ทำหน้า home.html ก่อน
 [x] ลุยเขียนฟังก์ชั่นต่อ ของ Blog app  <br>
 
@@ -16,5 +16,6 @@
 ### Problem :
 
 ### Crazy Idea:
-
+### Success :
+[x] class PostCreate()
 ### Functions :

@@ -4,7 +4,6 @@
 
 {%  if user_profile != None %}
 <img style="width: 100px; height: 100px;" src="{{ user_profile.profile.image.url }}">
-
   <h1>{{ user_profile.username }}</h1>
   <h2>{{ user.email }}</h2>
 {%  else %}
@@ -13,6 +12,14 @@
   <h2>{{ user.email }}</h2>
 {%  endif %}
 
-
-
+{% for post in posts %}
+<table border="1" cellpadding="10">
+    <tr>
+      <td>{{ post.content }}</td>
+    </tr>
+    <tr>
+      <td>{{ post.date_posted | date:"H:i l, d.m.y" }}</td>
+    </tr>
+</table>
+{% endfor %}
 {% endblock content%}

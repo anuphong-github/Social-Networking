@@ -84,3 +84,17 @@ class UserPostView(LoginRequiredMixin,ListView):
                     follows_between.delete()
 
         return self.get(self, request, *args, **kwargs)
+
+class PostCreate(LoginRequiredMixin,CreateView):
+    model = Post
+    fields = ['content']
+    template_name = 'blog/post-create.html'
+
+    def form_valid(self,form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['tag'] = 'Add your post'
+        return data

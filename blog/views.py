@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 import sys
+from .forms import UserCommentForm
 
 def is_users(post_user,logged_user):
     return post_user == logged_user
@@ -113,7 +114,7 @@ class PostUpdate(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
     fields = ['content']
     template_name = 'blog/post-create.html'
     success_url = '/'
-    
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)

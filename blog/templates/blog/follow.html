@@ -1,0 +1,15 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    {% if follow == 'follows' %}
+            <h3>Follows</h3>
+                {% for follow in follows %}
+                                <img style="width: 30px; height: 30px;" src="{{ follow.follow_user.profile.image.url }}">
+                               <a href="{% url 'user-posts' follow.follow_user.username %}">
+                                   {{ follow.follow_user.username }}
+                               </a>
+
+                {% endfor %}
+    {% endif %}
+
+
+{% endblock content %}

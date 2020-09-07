@@ -146,3 +146,20 @@ class PostDetail(DetailView):
         new_comment.save()
 
         return self.get(self, request, *args, **kwargs)
+
+class Follows(ListView):
+    model = Follow
+    template_name = 'blog/follow.html'
+    context_object_name = 'follows'
+
+    def visible_user(self):
+        return get_object_or_404(User, username = self.kwargs.get('username'))
+
+    def get_queryset(self):
+        user = self.visible_user()
+        return Follow.objects.filter(user=user).order_by('-date')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['follow'] = 'follows'
+        return data

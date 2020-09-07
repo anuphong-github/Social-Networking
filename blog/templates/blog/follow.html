@@ -11,5 +11,14 @@
                 {% endfor %}
     {% endif %}
 
-
+    {% if follow == 'followers' %}
+            <h3>Followers</h3>
+                {% for follow in follows %}
+                                <img style="width: 30px; height: 30px;" src="{{ follow.user.profile.image.url }}">
+                               <a href="{% url 'user-posts' follow.user.username %}">
+                                   {{ follow.user.username }}
+                               </a>
+                {% endfor %}
+    {% endif %}
+    
 {% endblock content %}

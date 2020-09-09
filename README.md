@@ -1,11 +1,12 @@
 # Social-Networking
 
 ### To do list :
-[x] class Follows()
-[x] class Followers()
+[x] จัดหน้าตา ให้มันสวย
+
+[x] ทำฟังก์ชั่นไลค์
 
 ### Doing :
-
+[x] blog/template/home.html
 
 ### Bug fix:
 

@@ -1,30 +1,170 @@
 {% extends "blog/base.html" %}
-
+{% load static %}
 {% block content %}
+    <div class="row">
+        <div class="col-12 col-md-3">
+            <div>
+            <div>
+                {%  if user_profile != None %}
+                <div class="mt-3 d-flex  align-items-center">
+                    <img
+                       class="rounded-circle img-thumbnail mr-4"
+                       style="width: 90px; height: 90px;"
+                       src="{{ user.profile.image.url }}">
+                    <div>
+                        <a href="{% url 'profile' %}">
+                        <h4 style="text-align: left">
+                            {{ user.username }}
+                        </h4>
+                        <h6 style="text-align: left">
+                            {{ user.email }}
+                        </h6></a>
+                    </div>
+                </div>
+                {%  else %}
+                    <div class="mt-3 d-flex  align-items-center">
+                        <img
+                           class="rounded-circle img-thumbnail mr-4"
+                           style="width: 90px; height: 90px;"
+                           src="{{ user.profile.image.url }}">
+                        <div>
+                            <a href="{% url 'profile' %}">
+                            <h4 style="text-align: left">
+                                {{ user.username }}
+                            </h4>
+                            <h6 style="text-align: left">
+                                {{ user.email }}
+                            </h6></a>
+                        </div>
+                    </div>
+                {%  endif %}
+            </div>
 
-{%  if user_profile != None %}
-<img style="width: 100px; height: 100px;" src="{{ user_profile.profile.image.url }}">
-  <h1>{{ user_profile.username }}</h1>
-  <h2>{{ user.email }}</h2>
-{%  else %}
-<img style="width: 100px; height: 100px;" src="{{ user.profile.image.url }}">
-  <h1>{{ user.username }}</h1>
-  <h2>{{ user.email }}</h2>
-{%  endif %}
+                <div class="row full-width pl-3">
+                    <div class="col-6">
+                            Followers
+                    </div>
+                    <div class="col-6">
+                            Following
+                    </div>
 
-{% for post in posts %}
-<table border="1" cellpadding="10">
-    <tr>
-      <td><a href="{% url 'post-detail' post.id %}">{{ post.content }}</a></td>
-      <td>{{ post.date_posted | date:"H:i l, d.m.y" }}</td>
-      <td>
-        {% if post.author == user %}
-             <a href="{% url 'post-delete' post.id %}">Delete</a>
-             <a href="{% url 'post-update' post.id %}">Update</a>
-         {%  endif %}
-      </td>
-    </tr>
+                    {%  if user_profile != None %}
+                        <div class="col-6">
+                            <h3 class="">
+                                <a href="{% url 'user-followers' user_profile.username %}">
+                                    {{ user_profile.profile.followers }}
+                                </a>
+                            </h3>
+                        </div>
+                         <div class="col-6">
+                            <a href="{% url 'user-follows' user_profile.username %}">
+                                <h3 class="">
+                                    {{ user_profile.profile.following }}
+                                </h3>
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="col-6">
+                            <a href="{% url 'user-followers' user.username %}">
+                                <h3 class="">
+                                    {{ user.profile.followers }}
+                                </h3>
+                            </a>
+                        </div>
 
-</table>
-{% endfor %}
-{% endblock content%}
+                        <a href="{% url 'user-follows' user.username %}">
+                            <div class="col-6">
+                                <h3 class="">
+                                    {{ user.profile.following }}
+                                </h3>
+                            </div>
+                        </a>
+                    {%  endif %}
+                </div>
+
+
+            <div class="">
+                {%  if user_profile is not None and user_profile.id != user.id  and user.username != '' %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <button style="margin-left: 60px" class="btn btn-primary"
+                                    name="{% if can_follow %}follow{% else %}unfollow{% endif %}"
+                                    type="submit">
+                                 {% if can_follow %}
+                                     FOLLOW
+                                 {% else %}
+                                     UNFOLLOW
+                                 {% endif %}
+                            </button>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6" >
+            <div class="full-width row">
+                <div class="col-6">
+                </div>
+                 <div class="col-6">
+                    <h6>
+                        {{ page_obj.start_index }} - {{ page_obj.end_index }} of
+                        {{ paginator.count }}
+                    </h6>
+                </div>
+            </div>
+
+            {% for post in posts %}
+                <div style="width: 100%; word-break: break-all;">
+
+                    <div class="pb-2 row m-0" style="width: 100%; margin-right: 0 !important;">
+                       <div
+                               style="padding-left: 0px !important;"
+                               class="col-8 no-padding d-flex align-items-center">
+                           <img
+                               class="rounded-circle mr-2"
+                               style="width: 20px; height: 20px;"
+                               src="{{ post.author.profile.image.url }}">
+                           <a class="mr-2 white-important" href="{% url 'user-posts' post.author %}">
+                               {{ post.author }}
+                           </a>
+                       </div>
+                       <div class="col-4 d-flex flex-row-reverse no-padding align-items-center"
+                            style="padding-right: 0 !important;">
+                           {% if post.author == user %}
+                                <a class="material-icons ml-2"
+                                   style="font-size: 14px"
+                                        href="{% url 'post-delete' post.id %}">delete</a>
+                                <a class="material-icons ml-2"
+                                   style="font-size: 14px"
+                                        href="{% url 'post-update' post.id %}">update</a>
+                            {%  endif %}
+                       </div>
+                   </div>
+                    <div class="mb-2"></div>
+                    <a href="{% url 'post-detail' post.id %}">
+                        <p class="mb-4">
+                            {{ post.content }}
+                        </p>
+                    </a>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <small>
+                                    <a href="/post/{{post.id}}/">
+                                        <i style=" font-size: 15px;" class="far fa-comment"></i> {{ post.number_of_comments }} comment(s)
+                                    </a>
+                                </small>
+                            </div>
+                            <div class="col-6">
+                                <small style="opacity: 0.4;"class="white-important d-flex full-width flex-row-reverse">
+                                    {{ post.date_posted | date:"H:i l, d.m.y" }}
+                                </small>
+                            </div>
+                        </div>
+                </div>
+            {% endfor %}
+            
+{% endblock content %}

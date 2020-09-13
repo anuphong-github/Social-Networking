@@ -1,18 +1,18 @@
 # Social-Networking
 
 ### To do list :
-[x] จัดหน้าตา ให้มันสวย
-
-[x] ทำฟังก์ชั่นไลค์
+[x] updated ux/ui
+[x] and then like function
 
 ### Doing :
-[x] blog/template/home.html
+[x] ux/ui
 
 ### Bug fix:
 
 ### Bug created :
 
 ### Problem :
+
 
 ### Crazy Idea:
 

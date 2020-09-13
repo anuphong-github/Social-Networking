@@ -1,5 +1,8 @@
 {% extends "blog/base.html" %}
 {% block content %}
+<div class="container" style="padding-top:15px;">
+  <div class="card">
+    <div class="card-body">
     {% if follow == 'follows' %}
             <h3>Follows</h3>
                 {% for follow in follows %}
@@ -7,10 +10,8 @@
                                <a href="{% url 'user-posts' follow.follow_user.username %}">
                                    {{ follow.follow_user.username }}
                                </a>
-
                 {% endfor %}
     {% endif %}
-
     {% if follow == 'followers' %}
             <h3>Followers</h3>
                 {% for follow in follows %}
@@ -20,5 +21,7 @@
                                </a>
                 {% endfor %}
     {% endif %}
-    
+    </div>
+  </div>
+</div>
 {% endblock content %}

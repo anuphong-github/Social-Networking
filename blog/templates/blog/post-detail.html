@@ -1,62 +1,67 @@
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+<div class="container">
 
-    <h3 class="">
+    <h3 class="text-muted" align="center">
         Post
     </h3>
+  <div class="card">
+    <div class="card-body">
   <img style="width: 30px; height: 30px;"
        src="{{ post.author.profile.image.url }}">
-  <a href="{% url 'user-posts' post.author %}">{{ post.author }} </a>
+    <a href="{% url 'user-posts' post.author %}">{{ post.author }} </a>
+    <p style="padding-left:40px; opacity: 0.4; font-size:12px;"> {{ post.date_posted | date:"H:i l, d.m.y" }}</p>
 
-  <div>
-    {% if post.author == user %}
-    <a  href="{% url 'post-delete' post.id %}">Delete</a>
-    <a  href="{% url 'post-update' post.id %}">Update</a>
-    {%  endif %}
- </div>
-
-  <a>
-    <p>{{ post.content }}</p>
-    <p> {{ post.date_posted | date:"H:i l, d.m.y" }}</p>
-  </a>
-
-  <h3>
+    <div class="card mb-3">
+      <div class="card-body">
+            <p>{{ post.content }}</p>
+      </div>
+    </div>
+    <div class="text-center">
+      {% if post.author == user %}
+      <a class="btn btn-danger" href="{% url 'post-delete' post.id %}">Delete</a>
+      <a class="btn btn-primary" href="{% url 'post-update' post.id %}">Update</a>
+      {%  endif %}
+     </div>
+</div>
+</div>
+  <h3  class="text-muted" align="center">
       Comments
   </h3>
-
 {% for comment in comments %}
-  <div>
+  <div class="card">
+    <div class="card-body">
     <div>
       <div>
-    <img style="width: 20px; height: 20px;"
+    <img style="width: 30px; height: 30px;"
          src="{{ comment.author.profile.image.url }}">
-    <a  href="{% url 'user-posts' comment.author.username %}">
-        {{ comment.author }}
+
+    <a   class="" href="{% url 'user-posts' comment.author.username %}">
+            {{ comment.author }}
+
     </a>
+    <p  style="padding-left:35px; opacity: 0.4; font-size:12px;">{{ comment.date_posted | date:"H:i l, d.m.y" }}</p>
   </div>
 </div>
   <p>
       {{ comment.content }}
   </p>
-
-  <p>{{ comment.date_posted | date:"H:i l, d.m.y" }}</p>
+  </div>
 </div>
-
+<br>
 {% endfor %}
-
         {% if user is not None %}
-                <h3>Add your comment</h3>
                 <form method="POST" action="">
                     {% csrf_token %}
                     <fieldset>
                         {{ form | crispy }}
                     </fieldset>
-                    <div>
-                        <button  type="submit">Submit</button>
+                    <div align="center">
+                        <button  type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
 
         {% endif %}
-
+</div>
 {% endblock content %}

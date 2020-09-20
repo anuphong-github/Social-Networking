@@ -1,13 +1,24 @@
 {% extends "blog/base.html" %}
 
 {% block content %}
-<form class="" action="" method="post">
-  {% csrf_token %}
-  <p >     
-     {{ post.content }}
-  </p>
-  <div >
-      <button  type="submit">Delete</button>
+<div class="container">
+  <div class="mb-4">
+    <h2 class="text-center"> Do you want to delete ?</h2>
   </div>
-</form>
+
+  <div class="">
+      <form class="" action="" method="post">
+        {% csrf_token %}
+        <div class="card mb-2">
+          <div class="card-body">
+               {{ post.content }}
+          </div>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-danger"  type="submit">Delete</button>
+        </div>
+      </form>
+  </div>
+</div>
+
 {% endblock content %}

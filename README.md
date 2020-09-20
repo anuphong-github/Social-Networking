@@ -1,15 +1,16 @@
 # Social-Networking
 
 ### To do list :
-[x] updated ux/ui
-[x] and then like function
+[x] ทำฟังก์ชั่นไลค์
+[x] ทำ ฟังก์ชั่น dislike
 
 ### Doing :
-[x] ux/ui
+[x] like func
 
 ### Bug fix:
 
 ### Bug created :
+
 
 ### Problem :
 
@@ -19,3 +20,5 @@
 ### Success :
 
 ### Functions :
+
+## Idea :

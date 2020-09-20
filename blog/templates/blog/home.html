@@ -107,20 +107,11 @@
         </div>
 
         <div class="col-12 col-md-6" >
-            <div class="full-width row">
-                <div class="col-6">
-                </div>
-                 <div class="col-6">
-                    <h6>
-                        {{ page_obj.start_index }} - {{ page_obj.end_index }} of
-                        {{ paginator.count }}
-                    </h6>
-                </div>
-            </div>
+
 
             {% for post in posts %}
-            <br>
-            <div class="card">
+
+            <div class="card mb-2">
             <div class="card-body">
                 <div style="width: 100%; word-break: break-all;">
 
@@ -165,7 +156,24 @@
                           </p>
                     </a>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6" style="display: flex;">
+
+                              <small style="opacity: 0.4;">
+                                  <a href="#" onClick="document.getElementById('likebutton{{ post.id }}').submit()">
+                                          {% if post.likes >= 1  %}
+                                          <i style="color: red; font-size: 16px;" class="fa fa-thumbs-up"></i>
+                                          {% else %}
+                                          <i style=" font-size: 16px;" class="fa fa-thumbs-up"></i>
+                                          {% endif %}
+                                          {{post.likes}} like(s)
+                                  </a>
+                                  <form id="likebutton{{ post.id }}" method="POST" action="{% url 'like' post.id 1 %}">
+                                        {% csrf_token %}
+                                      <input type="hidden">
+                                  </form>
+                            
+                              </small>
+
                                 <small>
                                     <a href="/post/{{post.id}}/">
                                         <i style=" font-size: 15px;" class="text-success fa fa-comment"></i> {{ post.number_of_comments }} comment(s)
@@ -178,5 +186,37 @@
               </div>
             {% endfor %}
 
+
+          <nav aria-label="Page navigation">
+              <ul class="pagination justify-content-center">
+          {% if is_paginated %}
+              {% if page_obj.has_previous %}
+              <li class="page-item ">
+                <a class="page-link" href="?page=1" >First</a>
+              </li>
+              <li class="page-item ">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" >Previous</a>
+              </li>
+              {% endif %}
+
+              {% for num in page_obj.paginator.page_range %}
+                  {% if page_obj.number == num %}
+                      <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                  {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
+                      <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                  {% endif %}
+              {% endfor %}
+
+              {% if page_obj.has_next %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                  </li>
+              {% endif %}
+          {% endif %}
+          </ul>
+          </nav>
 
 {% endblock content %}

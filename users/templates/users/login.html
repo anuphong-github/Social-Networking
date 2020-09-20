@@ -1,14 +1,23 @@
+{% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
-
-<div class="">
+{% block content %}
+<div class="container">
+  <h1 class="text-center">Login</h1>
   <form class="" action="" method="post">
     {% csrf_token %}
     <div class="">
       {{ form | crispy }}
     </div>
-    <div class="">
-        <button class="" type="submit">Login</button>
+    <div class="text-center mb-2">
+      <small class="text-muted">
+          Not a Social member? <a class="ml-1 text-decoration-none " href="{% url 'register-users' %}"><b>Sign up here</b></a>
+      </small>
+  </div>
+
+    <div class="text-center">
+        <button class="btn btn-success" type="submit">Login</button>
     </div>
-    
+
   </form>
 </div>
+{% endblock content %}

@@ -144,7 +144,6 @@ class PostDetail(DetailView):
                               author=self.request.user,
                               post_connected=self.get_object())
         new_comment.save()
-
         return self.get(self, request, *args, **kwargs)
 
 class Follows(ListView):
@@ -180,3 +179,60 @@ class Followers(ListView):
         data = super().get_context_data(**kwargs)
         data['follow'] = 'followers'
         return data
+
+
+@login_required
+def like(request,post_id,userlike):
+        if request.method == "POST":
+            each_post = get_object_or_404(Post,id=post_id)
+            object_orm = ""
+            value_object = ""
+            userlike = int(userlike)
+            try:
+                object_orm = Preference.objects.get(user=request.user,post=each_post)
+                value_object = object_orm.value
+                value_object = (value_object)
+                userlike = int(userlike)
+                if value_object != userlike:
+                    object_orm.delete()
+                    u_pref = Preference()
+                    u_pref.user = request.user
+                    u_pref.post = each_post
+                    u_pref.value = userlike
+                    if userlike ==  1 and object_orm != 1:
+                        each_post.likes += 1
+                        each_post.dislike -= 1
+                    u_pref.save()
+                    each_post.save()
+                    context = {'each_post':each_post,
+                                'post_id':post_id}
+                    return redirect('blog-index')
+
+                elif value_object == userlike:
+                    object_orm.delete()
+                    if userlike == 1:
+                        each_post.likes -= 1
+                    each_post.save()
+                    context = {'each_post':each_post,
+                                'post_id':post_id}
+                    return redirect('blog-index')
+
+            except Preference.DoesNotExist:
+                    u_pref = Preference()
+                    u_pref.user = request.user
+                    u_pref.post = each_post
+                    u_pref.value = userlike
+                    userlike = int(userlike)
+                    if userlike == 1 :
+                        each_post.likes += 1
+                    u_pref.save()
+                    each_post.save()
+
+                    context = {'post':each_post,
+                               'post_id':post_id}
+                    return redirect('blog-index')
+        else:
+            each_post = get_object_or_404(Post , id=post_id)
+            context = {'each_post':each_hpost,
+                        'each_post':post_id}
+            return redirect('blog-index')

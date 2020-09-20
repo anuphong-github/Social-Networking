@@ -10,7 +10,7 @@
   </head>
   <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
       <a class="navbar-brand" href="{% url 'blog-index' %}">Social Networking</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -18,11 +18,18 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
 
-        {% if user.is_authenticated %}
-            <li>
-              <a class="nav-link" href="{% url 'post-create' %}">Create your post</a>
+          {% if user.is_authenticated %}
+            <li class="">
+              <a class=" nav-link" href="{% url 'post-create' %}">Create your post</a>
             </li>
-
+            <li  class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="{% url 'profile' %}">Setting</a>
+                <a class="dropdown-item" href="{% url 'login' %}">Logout</a>
+              </div>
+            </li>
             {% else %}
             <li>
               <a class="nav-link" href="{% url 'login' %}">Login</a>
@@ -30,16 +37,9 @@
             <li>
               <a class="nav-link" href="{% url 'register-users' %}">Register</a>
             </li>
-              {% endif %}
+            {% endif %}
 
-            <li  class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="{% url 'profile' %}">Setting</a>
-                <a class="dropdown-item" href="#">Logout</a>
-              </div>
-            </li>
+
 
         </ul>
       </div>

@@ -8,6 +8,7 @@ from .views import (
     PostDetail,
     Follows,
     Followers,
+    like,
 )
 
 urlpatterns = [
@@ -19,4 +20,6 @@ urlpatterns = [
     path('post/<int:pk>/',PostDetail.as_view(),name='post-detail'),
     path('user/<str:username>/follows',Follows.as_view(),name='user-follows'),
     path('user/<str:username>/followers',Followers.as_view(),name='user-followers'),
+    path('post/<int:post_id>/like/<int:userlike>',like,name='like'),
+
 ]

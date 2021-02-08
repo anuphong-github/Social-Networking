@@ -180,7 +180,6 @@ class Followers(ListView):
         data['follow'] = 'followers'
         return data
 
-
 @login_required
 def like(request,post_id,userlike):
         if request.method == "POST":
@@ -188,6 +187,7 @@ def like(request,post_id,userlike):
             object_orm = ""
             value_object = ""
             userlike = int(userlike)
+
             try:
                 object_orm = Preference.objects.get(user=request.user,post=each_post)
                 value_object = object_orm.value
@@ -199,9 +199,10 @@ def like(request,post_id,userlike):
                     u_pref.user = request.user
                     u_pref.post = each_post
                     u_pref.value = userlike
-                    if userlike ==  1 and object_orm != 1:
+                    if userlike ==  1 and value_object != 1:
                         each_post.likes += 1
-                        each_post.dislike -= 1
+                        each_post.dislikes -= 1
+
                     u_pref.save()
                     each_post.save()
                     context = {'each_post':each_post,
@@ -212,6 +213,8 @@ def like(request,post_id,userlike):
                     object_orm.delete()
                     if userlike == 1:
                         each_post.likes -= 1
+                        print('Action 1')
+
                     each_post.save()
                     context = {'each_post':each_post,
                                 'post_id':post_id}
@@ -223,8 +226,11 @@ def like(request,post_id,userlike):
                     u_pref.post = each_post
                     u_pref.value = userlike
                     userlike = int(userlike)
+
                     if userlike == 1 :
                         each_post.likes += 1
+                        print('Action 2')
+
                     u_pref.save()
                     each_post.save()
 

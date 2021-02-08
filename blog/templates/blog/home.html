@@ -1,6 +1,8 @@
 {% extends "blog/base.html" %}
 {% load static %}
 {% block content %}
+
+
     <div class="row">
         <div class="col-12 col-md-3">
             <div>
@@ -29,11 +31,11 @@
                            style="width: 90px; height: 90px;"
                            src="{{ user.profile.image.url }}">
                         <div>
-                            <a href="{% url 'profile' %}">
+                            <a href="{% url 'profile' %}" class="text-decoration-none">
                             <h4 style="text-align: left">
                                 {{ user.username }}
                             </h4>
-                            <h6 style="text-align: left">
+                            <h6 style="text-align: left" >
                                 {{ user.email }}
                             </h6></a>
                         </div>
@@ -53,13 +55,13 @@
                     {%  if user_profile != None %}
                         <div class="col-6">
                             <h3 class="">
-                                <a href="{% url 'user-followers' user_profile.username %}">
+                                <a href="{% url 'user-followers' user_profile.username %}" class="text-decoration-none">
                                     {{ user_profile.profile.followers }}
                                 </a>
                             </h3>
                           </div>
                          <div class="col-6">
-                            <a href="{% url 'user-follows' user_profile.username %}">
+                            <a href="{% url 'user-follows' user_profile.username %}" class="text-decoration-none">
                                 <h3 class="">
                                     {{ user_profile.profile.following }}
                                 </h3>
@@ -67,14 +69,14 @@
                         </div>
                     {% else %}
                         <div class="col-6">
-                            <a href="{% url 'user-followers' user.username %}">
+                            <a href="{% url 'user-followers' user.username %}" class="text-decoration-none">
                                 <h3 class="">
                                     {{ user.profile.followers }}
                                 </h3>
                             </a>
                         </div>
 
-                        <a href="{% url 'user-follows' user.username %}">
+                        <a href="{% url 'user-follows' user.username %}" class="text-decoration-none">
                             <div class="col-6">
                                 <h3 class="">
                                     {{ user.profile.following }}
@@ -107,14 +109,10 @@
         </div>
 
         <div class="col-12 col-md-6" >
-
-
             {% for post in posts %}
-
             <div class="card mb-2">
             <div class="card-body">
                 <div style="width: 100%; word-break: break-all;">
-
                     <div class="pb-2 row m-0" style="width: 100%; margin-right: 0 !important;">
                        <div
                                style="padding-left: 0px !important;"
@@ -123,10 +121,10 @@
                                class="rounded-circle mr-2"
                                style="width: 50px; height: 50px;"
                                src="{{ post.author.profile.image.url }}">
-                           <a class="mr-2 white-important" href="{% url 'user-posts' post.author %}">
+                           <a class="mr-2 white-important text-decoration-none" href="{% url 'user-posts' post.author %}">
                                {{ post.author }}
                                <br>
-                            <p style="opacity: 0.4; font-size:12px;">
+                            <p style="opacity: 0.4; font-size:12px;" class="text-decoration-none">
                               {{ post.date_posted | date:"H:i l, d.m.y" }}
                               </p>
                            </a>
@@ -150,7 +148,7 @@
                    </div>
                     <div class="mb-3"></div>
 
-                    <a href="{% url 'post-detail' post.id %}">
+                    <a href="{% url 'post-detail' post.id %}" class="text-decoration-none">
                           <p class="mb-4">
                               {{ post.content }}
                           </p>
@@ -159,7 +157,7 @@
                             <div class="col-6" style="display: flex;">
 
                               <small style="opacity: 0.4;">
-                                  <a href="#" onClick="document.getElementById('likebutton{{ post.id }}').submit()">
+                                  <a href="#" onClick="document.getElementById('likebutton{{ post.id }}').submit()" class="text-decoration-none">
                                           {% if post.likes >= 1  %}
                                           <i style="color: red; font-size: 16px;" class="fa fa-thumbs-up"></i>
                                           {% else %}
@@ -167,20 +165,41 @@
                                           {% endif %}
                                           {{post.likes}} like(s)
                                   </a>
+
                                   <form id="likebutton{{ post.id }}" method="POST" action="{% url 'like' post.id 1 %}">
                                         {% csrf_token %}
                                       <input type="hidden">
                                   </form>
-                            
+                                </small>
+
+                              <small style="opacity: 0.4;">
+                                <!--Start Dislike !-->
+                                  <a href="#" onClick="document.getElementById('dislikebutton').submit()" class="text-decoration-none">
+                                          {% if post.dislikes == 1  %}
+                                          <i style="color: red; font-size: 16px;" class="fa fa-thumbs-down"></i>
+                                          {% else %}
+                                          <i style=" font-size: 16px;" class="fa fa-thumbs-down"></i>
+                                          {% endif %}
+                                          {{post.dislikes}} dislike(s)
+                                  </a>
+                                  <form id="dislikebutton{{ post.id }}" method="POST" action="{% url 'like' post.id 1 %}">
+                                        {% csrf_token %}
+                                      <input type="hidden">
+                                  </form>
+
+                                <!--End dislike!-->
                               </small>
 
+
                                 <small>
-                                    <a href="/post/{{post.id}}/">
+                                    <a href="/post/{{post.id}}/" class="text-decoration-none">
                                         <i style=" font-size: 15px;" class="text-success fa fa-comment"></i> {{ post.number_of_comments }} comment(s)
                                     </a>
                                 </small>
                             </div>
+
                         </div>
+
                 </div>
               </div>
               </div>
@@ -218,5 +237,19 @@
           {% endif %}
           </ul>
           </nav>
+          </div>
 
+          <!--Start Search!-->
+          <div class="row">
+                  <form action="{% url 'search' %}" method="post">
+                      {% csrf_token %}
+                      <div class="">
+                          <input required name="search" type="text"  placeholder="Search ....">
+                          <button type="submit">
+                          <i class="fa fa-search"></i>
+                          </button>
+                      </div>
+                  </form>
+          </div>
+         <!--End Search!-->
 {% endblock content %}

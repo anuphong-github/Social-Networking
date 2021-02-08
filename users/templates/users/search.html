@@ -1,0 +1,30 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+	<div class="container">
+		<div class="form-group">
+				<form action="{% url 'search' %}" method="post">
+					{% csrf_token %}
+            <div class="container">
+                   <input required name="search" type="text"  placeholder="Search ... ">
+                    <button type="submit" >
+											<i class="fa fa-search"></i>
+									</button>
+          </form>
+    </div>
+    <br>
+		{% if results %}
+			{% for result in results %}
+			<div>
+			   <div>
+          <img class="rounded-circle" style="width: 50px; height: 50px;" src="{{ result.profile.image.url }}">
+               {{ result.username }}
+          </div>
+			</div>
+			{% endfor %}
+		{% else %}
+			<div class="alert alert-danger">
+			  ไม่พบข้อมูล
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
